@@ -7,15 +7,9 @@ import {
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    const userId = request.headers.get("user_id");
-    if (!userId) {
-      return createErrorResponse("User ID not found", 401);
-    }
-
     const { data: chapters, error: chapterError } = await supabase
       .from("chapter")
-      .select("episode")
-      .eq("user_id", userId);
+      .select("episode");
 
     if (chapterError) {
       return createErrorResponse(chapterError.message, 500);

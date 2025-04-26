@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { supabase } from "../../supa-client";
 import { createErrorResponse, handleServerError } from "../../error/error-handle";
 
