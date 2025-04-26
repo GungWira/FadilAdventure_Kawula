@@ -1,5 +1,7 @@
 # Kaluwa
 
+![Kaluwa Banner](./public/banner-kaluwa.png)
+
 Kaluwa adalah platform pembelajaran interaktif berbasis kuis dan video kreator yang bertujuan meningkatkan pemahaman serta apresiasi terhadap budaya Indonesia.
 
 ---
