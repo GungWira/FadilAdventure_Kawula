@@ -34,11 +34,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     if (!fullname || !umur || !username) {
       return createErrorResponse("Name and email are required", 400);
     }
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> 48095c2fd28d673c54c56b93772b57ff9860406e
     let image_url = null;
     if (imageFile) {
       const bytes = await imageFile.arrayBuffer();
@@ -62,10 +57,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
       image_url = publicUrl;
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> 48095c2fd28d673c54c56b93772b57ff9860406e
     const { data, error }: CreateProfileResponse = await supabase
       .from("profiles")
       .insert([
@@ -85,8 +76,4 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     return handleServerError(error);
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 48095c2fd28d673c54c56b93772b57ff9860406e

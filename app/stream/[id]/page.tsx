@@ -24,6 +24,7 @@ export default function StreamPage() {
         if (!res.ok) throw new Error("Gagal fetch video");
         const data = await res.json();
         setVideo(data);
+        console.log(data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -45,7 +46,7 @@ export default function StreamPage() {
           <div className="w-full md:w-2/3">
             {/* Navigation */}
             <Link
-              href="#"
+              href=""
               className="inline-flex items-center gap-2 text-gray-700 mb-4 hover:text-gray-900"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -94,7 +95,7 @@ export default function StreamPage() {
                 <div key={item} className="flex gap-3 group cursor-pointer">
                   <div className="w-32 h-20 bg-gray-200 rounded-lg flex-shrink-0">
                     <Image
-                      src="/placeholder.svg?height=80&width=128"
+                      src="/thumbnail-1.png"
                       width={128}
                       height={80}
                       alt="Thumbnail"

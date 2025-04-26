@@ -38,10 +38,6 @@ export default function ProfileForm() {
   const [loading, setLoading] = useState(false);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
-  if (user && user.id) {
-    redirect("/culture");
-  }
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -64,8 +60,12 @@ export default function ProfileForm() {
 
     try {
       setLoading(true);
-
+      if (!user) {
+        return;
+      }
       const formData = new FormData();
+      formData.append("user_id", user.user_id);
+      formData.append("username", user.username);
       formData.append("video_url", values.file_video[0]);
       formData.append("title", values.title);
       formData.append("description", values.description);

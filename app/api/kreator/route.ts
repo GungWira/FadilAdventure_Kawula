@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "../../supa-client";
+import { supabase } from "../supa-client";
 
 const createErrorResponse = (message: string, status: number) =>
   NextResponse.json({ error: message }, { status });
@@ -15,20 +15,16 @@ const handleServerError = (error: unknown) => {
   );
 };
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const { id } = params;
-
+    const { user_id } = await request.json();
+    console.log(user_id);
     const { data: videoData, error: videoError } = await supabase
       .from("video")
       .select("*")
-      .eq("id", id)
-      .single();
+      .eq("creator_id", user_id);
     if (videoError || !videoData) {
-      return createErrorResponse("Culture not found", 404);
+      return NextResponse.json(videoData, { status: 200 });
     }
 
     return NextResponse.json(videoData, { status: 200 });

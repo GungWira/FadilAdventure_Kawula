@@ -1,4 +1,3 @@
-
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
@@ -41,12 +40,10 @@ export default function LearnCarousel() {
           <span className="text-sm font-medium">0%</span>
           <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
             <div className="w-1 h-full bg-indigo-600 rounded-full"></div>
-
           </div>
         </div>
-      
+      </div>
       <CarouselLearn />
     </section>
-
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
-import CarouselLearn from "./carousel-content";
+import CarouselContents from "./carousel-content";
 
 export default function LatestContent() {
   return (
@@ -13,7 +13,7 @@ export default function LatestContent() {
         <h2 className="text-xl font-bold">Konten yang Baru Kamu Buat</h2>
       </div>
 
-      <CarouselLearn />
+      <CarouselContents />
     </section>
   );
 }
