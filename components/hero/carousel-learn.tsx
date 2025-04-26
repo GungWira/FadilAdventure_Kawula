@@ -1,11 +1,10 @@
+"use client"; // WAJIB: supaya bisa pakai useState, useEffect
 
-"use client" // WAJIB: supaya bisa pakai useState, useEffect
-
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
+import Loading from "../loading/loading";
 import {
   Carousel,
   CarouselContent,
@@ -15,30 +14,34 @@ import {
 } from "@/components/ui/carousel";
 
 export default function CarouselSize() {
-  const [chapters, setChapters] = useState<any[]>([])
+  const [chapters, setChapters] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchChapters() {
-      const res = await fetch('/api/chapters/many', {
-        method: "GET"
-      })
-      const data = await res.json()
-      console.log(data[0].episodes)
-      setChapters(data[0].episodes)
+      setLoading(true);
+      const res = await fetch("/api/chapters/many", {
+        method: "GET",
+      });
+      const data = await res.json();
+      setChapters(data[0].episodes);
+      setLoading(false);
     }
 
-    fetchChapters()
-  }, [])
+    fetchChapters();
+  }, []);
+  if (loading) return <Loading />;
   return (
     <div className="">
-      <pre>
-        
-      </pre>
+      <pre></pre>
 
       <Carousel opts={{ align: "start" }} className="w-full">
         <CarouselContent>
           {chapters.map((chapter, index) => (
-            <CarouselItem key={chapter.id || index} className="md:basis-2/4 lg:basis-56">
+            <CarouselItem
+              key={chapter.id || index}
+              className="md:basis-2/4 lg:basis-56"
+            >
               <div>
                 <Link href={`/teste/${chapter.id}`}>
                   <Image
@@ -50,18 +53,18 @@ export default function CarouselSize() {
                   />
                   <div className="mt-4">
                     <h3 className="font-medium mb-1">{chapter.title}</h3>
-                    <p className="text-sm text-gray-600">{chapter.description}</p>
+                    <p className="text-sm text-gray-600">
+                      {chapter.description}
+                    </p>
                   </div>
                 </Link>
               </div>
             </CarouselItem>
-
-            
           ))}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
     </div>
-  )
+  );
 }

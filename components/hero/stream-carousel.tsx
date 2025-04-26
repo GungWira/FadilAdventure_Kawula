@@ -34,9 +34,9 @@ export default function StreamCarousel() {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold">Belajar Menari</h2>
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium">48%</span>
+          <span className="text-sm font-medium">0%</span>
           <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div className="w-1/2 h-full bg-indigo-600 rounded-full"></div>
+            <div className="w-1 h-full bg-indigo-600 rounded-full"></div>
           </div>
         </div>
       </div>
