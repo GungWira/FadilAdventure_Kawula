@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
+import { redirect } from "next/navigation";
 
 const formSchema = z.object({
   profile_picture: z.any(),
@@ -25,7 +26,11 @@ const formSchema = z.object({
 });
 
 export default function ProfileForm() {
-  const { user } = useAuth();
+  const { user, login } = useAuth();
+
+  if (user && user.id) {
+    redirect("/culture");
+  }
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -39,31 +44,13 @@ export default function ProfileForm() {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const payload = {
-      fullname: values.nama_lengkap,
-      username: values.nama_panggilan,
-      umur: values.umur,
-      user_id: user?.user_id,
-    };
-
-    try {
-      const res = await fetch("/api/profile", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Gagal membuat profil");
-      }
-
-      console.log("Profile created:", data);
-    } catch (error) {
-      console.error("Error submitting profile:", error);
+    const res = await login(
+      values.nama_lengkap,
+      values.nama_panggilan,
+      parseInt(values.umur, 10)
+    );
+    if (res && res.status == 200) {
+      redirect("/culture");
     }
   }
 

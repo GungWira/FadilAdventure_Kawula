@@ -9,9 +9,22 @@ type UserProfile = {
   profile_image: string;
   xp: number;
   user_id: string;
+  culture: string;
 };
 
-const AuthContext = createContext<{ user: UserProfile | null }>({ user: null });
+const AuthContext = createContext<{
+  user: UserProfile | null;
+  login: (
+    fullname: string,
+    username: string,
+    umur: number
+  ) => Promise<{ status: number } | undefined>;
+}>({
+  user: null,
+  login: async (fullname: string, username: string, umur: number) => {
+    return undefined;
+  },
+});
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const supabase = createClient();
@@ -25,7 +38,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (session?.user) {
       const { data, error } = await supabase
         .from("profiles")
-        .select("id, username, profile_image, xp, user_id")
+        .select("id, username, profile_image, xp, user_id, culture")
         .eq("user_id", session.user.id)
         .single();
 
@@ -36,6 +49,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     } else {
       setUser(null);
+    }
+  };
+
+  const login = async (fullname: string, username: string, umur: number) => {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (session?.user) {
+      const { error } = await supabase.from("profiles").insert([
+        {
+          fullname,
+          username,
+          umur,
+          user_id: session.user.id,
+        },
+      ]);
+
+      if (error) {
+        console.error("Error inserting profile:", error);
+      } else {
+        await fetchUserProfile();
+        return { status: 200 };
+      }
+    } else {
+      console.error("No user session found");
     }
   };
 
@@ -58,7 +97,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, login }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 
