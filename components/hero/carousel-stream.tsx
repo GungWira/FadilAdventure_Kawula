@@ -56,6 +56,46 @@ export default function CarouselStream() {
             </div>
           </CarouselItem>
         ))}
+        <CarouselItem className="md:basis-2/4 lg:basis-56">
+          <div>
+            <Link href={"/"}>
+              <Image
+                src={`/thumbnail-2.png`}
+                alt="Learning illustration"
+                width="200"
+                height="100"
+                className=" w-full object-cover aspect-video rounded-xl bg-indigo-300"
+              />
+              <div className="mt-4">
+                <h3 className="font-medium mb-1">
+                  Belajar Tari Topeng Sidakarya
+                </h3>
+                <p className="text-sm text-gray-600 line-clamp-2">
+                  Mari belajar cara menari Topeng Sidakarya bersama Kaluwa!
+                </p>
+              </div>
+            </Link>
+          </div>
+        </CarouselItem>
+        <CarouselItem className="md:basis-2/4 lg:basis-56">
+          <div>
+            <Link href={"/"}>
+              <Image
+                src={`/thumbnail-3.png`}
+                alt="Learning illustration"
+                width="200"
+                height="100"
+                className=" w-full object-cover aspect-video rounded-xl bg-indigo-300"
+              />
+              <div className="mt-4">
+                <h3 className="font-medium mb-1">Belajar Tari Pendet Wanita</h3>
+                <p className="text-sm text-gray-600 line-clamp-2">
+                  Mari belajar cara menari Pendet Wanita bersama Kaluwa!
+                </p>
+              </div>
+            </Link>
+          </div>
+        </CarouselItem>
       </CarouselContent>
       <CarouselPrevious />
       <CarouselNext />
