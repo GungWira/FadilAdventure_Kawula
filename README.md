@@ -17,16 +17,22 @@ Kaluwa adalah platform pembelajaran interaktif berbasis kuis dan video kreator y
 
 Clone repository
 
+```bash
 git clone https://github.com/username/kaluwa.git
 cd kaluwa
+```
 
 Install dependencies
 
+```bash
 npm install
+```
 
 atau
 
+```bash
 yarn install
+```
 
 Buat file .env.local dan isi dengan environment variables Supabase
 
