@@ -67,3 +67,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.max-w-108 {
+  max-width: 32rem;
+}
