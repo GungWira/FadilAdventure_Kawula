@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 
-export default function HeroBanner() {
+export default function KreatorBanner() {
   const { user } = useAuth();
   return (
     <section className="container mx-auto px-4 lg:px-0 mt-4">
@@ -28,41 +28,29 @@ export default function HeroBanner() {
         <div className="relative z-10 flex flex-col md:flex-row justify-between gap-16">
           <div className="md:w-1/2 flex flex-col gap-8">
             <div className="">
-              <h1 className="text-4xl font-bold text-white mb-4 pt-5">
-                Halo {user ? ", " + user.username : "Kawula!"}
-              </h1>
-              {user ? (
-                <p className="text-white text-xl ">
-                  Dikit lagi kamu bisa{" "}
-                  <span className="font-semibold">Budaya Bali</span> nih! Ayo
-                  lanjutin progress belajar kamu sekarang!
-                </p>
-              ) : (
-                <p className="text-white text-xl ">
-                  Belajar berbagai bahasa Nusantara serta berbagai jenis budaya
-                  menakjubkan dari seluruh penjuru Indonesia!
-                </p>
-              )}
+              <div className="flex justify-start items-center gap-3">
+                <h1 className="text-4xl font-bold text-white mb-4 pt-5">
+                  Halo {user ? ", " + user.username : ""}
+                </h1>
+                <Image
+                  src={"/kreator-bandage.svg"}
+                  alt="kreator bandage"
+                  width={180}
+                  height={60}
+                  className="h-8 w-auto"
+                />
+              </div>
+              <p className="text-white text-xl ">
+                Terus berkarya untuk nusa dan bangsa dengan{" "}
+                <span className="font-semibold">mudah cepat dan efisien!</span>{" "}
+                Ayo buat konten terbaru sekarang juga!
+              </p>
             </div>
-            {user ? (
-              <div className="flex gap-4 pb-5">
-                <button className="px-6 py-2 bg-yellow-400 rounded-full font-medium">
-                  Lanjutin
-                </button>
-                <button className="px-6 py-2 bg-indigo-500 bg-opacity-50 rounded-full text-white border border-white border-opacity-30">
-                  Ganti Budaya
-                </button>
-              </div>
-            ) : (
-              <div className="flex gap-4 pb-5">
-                <button className="px-6 py-2 bg-yellow-400 rounded-full font-medium">
-                  <Link href={"/sign-up"}>Mulai Sekarang</Link>
-                </button>
-                <button className="px-6 py-2 bg-indigo-500 bg-opacity-50 rounded-full text-white border border-white border-opacity-30">
-                  <Link href={"/pricing"}>Fitur premium</Link>
-                </button>
-              </div>
-            )}
+            <div className="flex gap-4 pb-5">
+              <button className="px-6 py-2 bg-yellow-400 rounded-full font-medium">
+                <Link href={"/kreator/buat"}>Buat Konten</Link>
+              </button>
+            </div>
           </div>
           <div className="md:w-1/2 flex relative justify-end mt-8 md:mt-0">
             <Image

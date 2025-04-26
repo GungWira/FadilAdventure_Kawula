@@ -1,6 +1,6 @@
-
 import { Geist, Poppins } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
@@ -26,8 +26,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
   return (
     <html lang="en" className={geistSans.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
@@ -39,7 +37,10 @@ export default function RootLayout({
         >
           <AuthProvider>
             <Navbar />
-            <div className="container mx-auto py-4">{children}</div>
+            <div className="container mx-auto py-4">
+              {children}
+              <Toaster position="top-center" richColors />
+            </div>
             <Footer />
           </AuthProvider>
         </ThemeProvider>

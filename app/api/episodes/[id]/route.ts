@@ -33,8 +33,7 @@ export async function GET(
       .select("id, question, answer, answer_options, type")
       .in("id", episode_questions.questions_id || []);
 
-    console.log(questions)
-    
+      
     const flattenedQuestions = questions?.flatMap(q => ({
       id: q.id,
       question: q.question,
@@ -48,6 +47,47 @@ export async function GET(
     } 
 
     return NextResponse.json(flattenedQuestions);
+  } catch (error) {
+    return handleServerError(error);
+  }
+}
+
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+): Promise<NextResponse> {
+  try {
+    const episodeId = (await params).id;
+    const { user_id } = await request.json();
+
+    if (!episodeId) {
+      return createErrorResponse("Episode ID is required", 400);
+    }
+
+    if (!user_id) {
+      return createErrorResponse("User ID is required", 400);
+    }
+
+    const { error: episodeError } = await supabase
+      .from("episodes")
+      .update({ is_completed: true })
+      .eq("id", episodeId);
+
+    if (episodeError) {
+      return createErrorResponse(episodeError.message, 500);
+    }
+
+    const { data: userData, error: userError } = await supabase
+      .from("profiles")
+      .update({ xp: supabase.rpc('increment', { value: 20 }) })
+      .eq("id", user_id)
+      .select();
+
+    if (userError) {
+      return createErrorResponse(userError.message, 500);
+    }
+
+    return NextResponse.json(userData);
   } catch (error) {
     return handleServerError(error);
   }

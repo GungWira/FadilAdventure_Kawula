@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import { redirect } from "next/navigation";
+import Loading from "../loading/loading";
 
 const formSchema = z.object({
   profile_picture: z.any(),
@@ -27,6 +28,7 @@ const formSchema = z.object({
 
 export default function ProfileForm() {
   const { user, login } = useAuth();
+  const [loading, setLoading] = useState(false);
 
   if (user && user.id) {
     redirect("/culture");
@@ -44,16 +46,22 @@ export default function ProfileForm() {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true);
     const res = await login(
       values.nama_lengkap,
       values.nama_panggilan,
       parseInt(values.umur, 10)
     );
     if (res && res.status == 200) {
+      setLoading(false);
       redirect("/culture");
     }
+    setLoading(false);
   }
 
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div>
       <div className="container mx-auto py-4">
@@ -125,7 +133,6 @@ export default function ProfileForm() {
                   </FormItem>
                 )}
               />
-
 
               {/* Nama Panggilan */}
               <FormField
