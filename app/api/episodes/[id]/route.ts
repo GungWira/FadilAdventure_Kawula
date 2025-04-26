@@ -33,8 +33,7 @@ export async function GET(
       .select("id, question, answer, answer_options, type")
       .in("id", episode_questions.questions_id || []);
 
-    console.log(questions)
-    
+      
     const flattenedQuestions = questions?.flatMap(q => ({
       id: q.id,
       question: q.question,
@@ -48,6 +47,33 @@ export async function GET(
     } 
 
     return NextResponse.json(flattenedQuestions);
+  } catch (error) {
+    return handleServerError(error);
+  }
+}
+
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+): Promise<NextResponse> {
+  try {
+    const episodeId = (await params).id;
+
+    if (!episodeId) {
+      return createErrorResponse("Episode ID is required", 400);
+    }
+
+    const { data, error } = await supabase
+      .from("episodes")
+      .update({ is_completed: true })
+      .eq("id", episodeId)
+      .select();
+
+    if (error) {
+      return createErrorResponse(error.message, 500);
+    }
+
+    return NextResponse.json(data);
   } catch (error) {
     return handleServerError(error);
   }
