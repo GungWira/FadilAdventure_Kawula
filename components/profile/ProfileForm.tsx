@@ -37,11 +37,12 @@ export default function ProfileForm() {
   }
   return (
     <div>
-      <div className="container mx-auto py-4">
-        <h1>Selesaikan profilmu</h1>
-
+      <div className="container mx-auto py-4 border-red-500">
+        <h1 className='text-center scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-3xl mb-6'>Selesaikan profilmu</h1>
+        <div className=" flex justify-center items-center border border-red-500">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-1/2">
             <FormField
               control={form.control}
               name="nama_lengkap"
@@ -114,6 +115,7 @@ export default function ProfileForm() {
             </div>
           </form>
         </Form>
+        </div>
       </div>
     </div>
   )
