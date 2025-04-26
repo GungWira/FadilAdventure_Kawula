@@ -3,7 +3,6 @@ import { supabase } from "../supa-client";
 import { CreateProfileResponse } from "./types";
 import { createErrorResponse, handleServerError } from "../error/error-handle";
 
-
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
     const id = request.nextUrl.searchParams.get("id");
@@ -26,50 +25,58 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const formData = await request.formData();
-    const imageFile = formData.get('profile') as File;
-    const fullname = formData.get('fullname') as string;
-    const username = formData.get('username') as string;
-    const umur = formData.get('umur') as string;
-    const user_id = formData.get('user_id') as string;
+    const imageFile = formData.get("profile") as File;
+    const fullname = formData.get("fullname") as string;
+    const username = formData.get("username") as string;
+    const umur = formData.get("umur") as string;
+    const user_id = formData.get("user_id") as string;
 
     if (!fullname || !umur || !username) {
       return createErrorResponse("Name and email are required", 400);
     }
+<<<<<<< HEAD
+
+=======
     
+>>>>>>> 48095c2fd28d673c54c56b93772b57ff9860406e
     let image_url = null;
     if (imageFile) {
       const bytes = await imageFile.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
       const fileName = `${user_id}-${imageFile.name}`;
-      const { data: uploadData, error: uploadError } = await supabase
-        .storage
-        .from('profile-image')
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from("profile-image")
         .upload(fileName, buffer, {
           contentType: imageFile.type,
-          upsert: true
+          upsert: true,
         });
 
       if (uploadError) {
         return createErrorResponse(uploadError.message, 500);
       }
 
-      const { data: { publicUrl } } = supabase
-        .storage
-        .from('profiles')
-        .getPublicUrl(fileName);
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from("profiles").getPublicUrl(fileName);
 
       image_url = publicUrl;
     }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 48095c2fd28d673c54c56b93772b57ff9860406e
     const { data, error }: CreateProfileResponse = await supabase
       .from("profiles")
-      .insert([{ 
-        fullname, 
-        username, 
-        umur, 
-        user_id,
-        image_url 
-      }])
+      .insert([
+        {
+          fullname,
+          username,
+          umur,
+          user_id,
+          image_url,
+        },
+      ])
       .select("*")
       .single();
 
@@ -78,4 +85,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     return handleServerError(error);
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 48095c2fd28d673c54c56b93772b57ff9860406e

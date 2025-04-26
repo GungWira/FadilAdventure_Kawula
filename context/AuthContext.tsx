@@ -19,11 +19,13 @@ const AuthContext = createContext<{
     username: string,
     umur: number
   ) => Promise<{ status: number } | undefined>;
+  logout: () => Promise<void>;
 }>({
   user: null,
   login: async (fullname: string, username: string, umur: number) => {
     return undefined;
   },
+  logout: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -43,7 +45,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         .single();
 
       if (error) {
-        setUser(null);
+        setUser({
+          id: "",
+          username: "",
+          profile_image: "",
+          xp: 0,
+          user_id: session.user.id,
+          culture: "",
+        });
       } else {
         setUser(data);
       }
@@ -78,6 +87,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const logout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+  };
+
   useEffect(() => {
     fetchUserProfile();
 
@@ -97,7 +111,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
