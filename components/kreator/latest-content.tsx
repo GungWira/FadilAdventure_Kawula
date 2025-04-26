@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
-import CarouselLearn from "./carousel-learn";
+import CarouselLearn from "./carousel-content";
 
 export default function LatestContent() {
   return (
@@ -11,12 +11,6 @@ export default function LatestContent() {
 
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold">Konten yang Baru Kamu Buat</h2>
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium">48%</span>
-          <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div className="w-1/2 h-full bg-indigo-600 rounded-full"></div>
-          </div>
-        </div>
       </div>
 
       <CarouselLearn />
