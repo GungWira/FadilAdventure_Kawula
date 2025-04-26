@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,30 +15,56 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
 
 const formSchema = z.object({
   profile_picture: z.any(),
   nama_lengkap: z.string(),
   nama_panggilan: z.string(),
-  email: z.string(),
   umur: z.string(),
 });
 
 export default function ProfileForm() {
+  const { user } = useAuth();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       nama_lengkap: "",
       nama_panggilan: "",
-      email: "",
       umur: "",
     },
   });
 
   const [previewImage, setPreviewImage] = useState<string | null>(null);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const payload = {
+      fullname: values.nama_lengkap,
+      username: values.nama_panggilan,
+      umur: values.umur,
+      user_id: user?.user_id,
+    };
+
+    try {
+      const res = await fetch("/api/profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Gagal membuat profil");
+      }
+
+      console.log("Profile created:", data);
+    } catch (error) {
+      console.error("Error submitting profile:", error);
+    }
   }
 
   return (
@@ -123,21 +148,6 @@ export default function ProfileForm() {
                     <FormLabel>Nama Panggilan</FormLabel>
                     <FormControl>
                       <Input placeholder="Masukkan nama panggilan" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* Email */}
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Masukkan email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

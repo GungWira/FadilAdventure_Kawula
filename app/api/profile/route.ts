@@ -29,7 +29,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       });
     }
 
-    return NextResponse.json(data); 
+    return NextResponse.json(data);
   } catch (error) {
     return new NextResponse(
       JSON.stringify({
@@ -37,19 +37,20 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         details: error instanceof Error ? error.message : "Unknown error",
         status: 500,
       }),
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const { fullname, username, email, user_id }: Profile = await request.json();
+    const { fullname, username, email, user_id }: Profile =
+      await request.json();
 
     if (!fullname || !email || !username) {
       return new NextResponse(
         JSON.stringify({ error: "Name and email are required" }),
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -72,7 +73,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         error: "Internal server error",
         details: error instanceof Error ? error.message : "Unknown error",
       }),
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
@@ -114,7 +115,7 @@ export async function PATCH(request: NextRequest): Promise<NextResponse> {
         error: "Internal server error",
         details: error instanceof Error ? error.message : "Unknown error",
       }),
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

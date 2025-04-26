@@ -8,6 +8,7 @@ type UserProfile = {
   username: string;
   profile_image: string;
   xp: number;
+  user_id: string;
 };
 
 const AuthContext = createContext<{ user: UserProfile | null }>({ user: null });
@@ -24,7 +25,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (session?.user) {
       const { data, error } = await supabase
         .from("profiles")
-        .select("id, username, profile_image, xp")
+        .select("id, username, profile_image, xp, user_id")
         .eq("user_id", session.user.id)
         .single();
 
