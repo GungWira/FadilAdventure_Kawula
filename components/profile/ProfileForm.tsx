@@ -37,9 +37,9 @@ export default function ProfileForm() {
   }
   return (
     <div>
-      <div className="container mx-auto py-4 border-red-500">
+      <div className="container mx-auto py-4 min-h-screen">
         <h1 className='text-center scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-3xl mb-6'>Selesaikan profilmu</h1>
-        <div className=" flex justify-center items-center border border-red-500">
+        <div className=" flex justify-center items-center ">
         <Form {...form}>
           
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-1/2">
