@@ -36,50 +36,58 @@ yarn install
 
 Buat file .env.local dan isi dengan environment variables Supabase
 
+```bash
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
 Jalankan project di mode development
 
+```bash
 npm run dev
+```
 
 atau
 
+```bash
 yarn dev
+```
 
 Buka di browser: http://localhost:3000
 
 ## 🌟 Fitur Utama
 
-Kuis Budaya — Jawab pertanyaan interaktif tentang budaya Indonesia.
-
-Upload Video — Kreator bisa membagikan konten video bertema budaya.
-
-Authentication — Login/Register menggunakan Supabase Auth.
-
-Responsive Design — Tampil optimal di mobile, tablet, dan desktop.
-
-Dashboard Kreator — Manajemen video dan profil kreator budaya.
+- Kuis Budaya — Jawab pertanyaan interaktif tentang budaya Indonesia.
+- Upload Video — Kreator bisa membagikan konten video bertema budaya.
+- Authentication — Login/Register menggunakan Supabase Auth.
+- Responsive Design — Tampil optimal di mobile, tablet, dan desktop.
+- Dashboard Kreator — Manajemen video dan profil kreator budaya.
 
 ## 📢 Kontribusi
 
 Fork repository ini
 
+```bash
 Buat branch baru
+```
 
 git checkout -b fitur-anda
 
+```bash
 Commit perubahan
+```
 
 git commit -m "Tambah fitur baru"
 
+```bash
 Push ke branch
+```
 
 git push origin fitur-anda
 
+```bash
 Buka Pull Request 🚀
-
-
+```
 
 ## ❤️ Dukungan
 
