@@ -14,6 +14,13 @@ export default async function ProtectedPage() {
     return redirect("/sign-in");
   }
 
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("user_id", user.id);
+
+  console.log(profile);
+
   return (
     <div className="flex-1 w-full flex flex-col gap-12">
       <div className="w-full">

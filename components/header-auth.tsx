@@ -1,46 +1,35 @@
-import { signOutAction } from "@/app/actions";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
+"use client";
+
 import Link from "next/link";
-import { Badge } from "./ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "./ui/button";
-import { createClient } from "@/utils/supabase/server";
+import { useAuth } from "@/context/AuthContext";
 
-export default async function AuthButton() {
-  const supabase = await createClient();
+type UserProfile = {
+  id: string;
+  username: string;
+  profile_image: string;
+  xp: number;
+};
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export default function AuthButton() {
+  const { user } = useAuth();
+  console.log(user);
+  // const supabase = await createClient();
 
-  if (!hasEnvVars) {
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser();
+
+  if (user == null) {
     return (
       <>
         <div className="flex gap-4 items-center">
-          <div>
-            <Badge
-              variant={"default"}
-              className="font-normal pointer-events-none"
-            >
-              Please update .env.local file with anon key and url
-            </Badge>
-          </div>
           <div className="flex gap-2">
-            <Button
-              asChild
-              size="sm"
-              variant={"outline"}
-              disabled
-              className="opacity-75 cursor-none pointer-events-none"
-            >
+            <Button asChild variant={"outline"}>
               <Link href="/sign-in">Masuk</Link>
             </Button>
-            <Button
-              asChild
-              size="sm"
-              variant={"default"}
-              disabled
-              className="opacity-75 cursor-none pointer-events-none"
-            >
+            <Button asChild variant={"blue"}>
               <Link href="/sign-up">Daftar</Link>
             </Button>
           </div>
@@ -48,23 +37,20 @@ export default async function AuthButton() {
       </>
     );
   }
-  return user ? (
-    <div className="flex items-center gap-4">
-      Hey, {user.email}!
-      <form action={signOutAction}>
-        <Button type="submit" variant={"outline"}>
-          Sign out
-        </Button>
-      </form>
-    </div>
-  ) : (
-    <div className="flex gap-2">
-      <Button asChild size="sm" variant={"outline"}>
-        <Link href="/sign-in">Masuk</Link>
-      </Button>
-      <Button asChild size="sm" variant={"default"}>
-        <Link href="/sign-up">Daftar</Link>
-      </Button>
+  return (
+    <div className="flex justify-end items-center gap-2">
+      <div className="flex flex-col justify-start items-end">
+        <p>Wiradarma</p>
+        <div className="w-full max-w-xl h-[6px] flex justify-end rounded-full my-1 bg-[#E2E2EB] overflow-hidden">
+          <div className={`flex h-full w-1/2 bg-[#5956EB]`}></div>
+        </div>
+      </div>
+      <Avatar>
+        <AvatarImage
+          src={user.profile_image || "https://github.com/shadcn.png"}
+        />
+        <AvatarFallback>{user.username}</AvatarFallback>
+      </Avatar>
     </div>
   );
 }
