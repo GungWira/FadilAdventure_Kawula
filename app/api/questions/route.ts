@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "../../supa-client";
+import { supabase } from "../supa-client";
 import {
   createErrorResponse,
   handleServerError,
-} from "../../error/error-handle";
+} from "../error/error-handle";
 
 export async function POST(request: NextRequest) {
   try {
