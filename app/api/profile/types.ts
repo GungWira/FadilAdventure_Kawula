@@ -2,7 +2,7 @@ import { UUID } from "crypto";
 
 export interface Profile {
   name: string;
-  email: string;
+  umur: string;
   username: string;
   fullname: string;
   user_id: UUID;

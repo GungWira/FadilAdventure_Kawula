@@ -34,19 +34,19 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     return handleServerError(error);
   }
-}
+};
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const { fullname, username, email, user_id }: Profile = await request.json();
+    const { fullname, username, umur, user_id }: Profile = await request.json();
 
-    if (!fullname || !email || !username) {
+    if (!fullname || !umur || !username) {
       return createErrorResponse("Name and email are required", 400);
     }
     
     const { data, error }: CreateProfileResponse = await supabase
       .from("profiles")
-      .insert([{ fullname, username, email, user_id }])
+      .insert([{ fullname, username, umur, user_id }])
       .select("*")
       .single();
 
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     return handleServerError(error);
   }
-}
+};
 
 export async function PATCH(request: NextRequest): Promise<NextResponse> {
   try {
@@ -81,11 +81,11 @@ export async function PATCH(request: NextRequest): Promise<NextResponse> {
       .select("*");
 
     if (error) return createErrorResponse(error.message, 500);
-    
+
     if (!data) return createErrorResponse("Profile not found", 404);
 
     return NextResponse.json(data);
   } catch (error) {
     return handleServerError(error);
   }
-}
+};
