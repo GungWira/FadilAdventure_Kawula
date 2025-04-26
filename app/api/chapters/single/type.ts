@@ -12,6 +12,3 @@ export interface Chapter {
   thumbnail?: string;
 }
 
-export interface lesson {
-
-}
