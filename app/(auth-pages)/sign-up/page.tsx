@@ -35,7 +35,7 @@ export default async function Signup(props: {
             <h1 className="text-2xl font-medium my-1">Buat Akun</h1>
             <div className="flex justify-center items-center gap-2">
               <div className="w-3 aspect-square rounded-full bg-[#5956EB]"></div>
-              <p className="text-sm text text-foreground">11.301 Anggota</p>
+              <p className="text-sm text text-foreground">11.301 Pengguna</p>
             </div>
           </div>
           <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
