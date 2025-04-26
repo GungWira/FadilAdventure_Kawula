@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
+import Link from "next/link";
 
 export default function HeroBanner() {
   const { user } = useAuth();
@@ -28,22 +29,40 @@ export default function HeroBanner() {
           <div className="md:w-1/2 flex flex-col gap-8">
             <div className="">
               <h1 className="text-4xl font-bold text-white mb-4 pt-5">
-                Halo, {user ? user.username : ""}
+                Halo {user ? ", " + user.username : "Kawula!"}
               </h1>
-              <p className="text-white text-xl ">
-                Dikit lagi kamu bisa{" "}
-                <span className="font-semibold">Budaya Bali</span> nih! Ayo
-                lanjutin progress belajar kamu sekarang!
-              </p>
+              {user ? (
+                <p className="text-white text-xl ">
+                  Dikit lagi kamu bisa{" "}
+                  <span className="font-semibold">Budaya Bali</span> nih! Ayo
+                  lanjutin progress belajar kamu sekarang!
+                </p>
+              ) : (
+                <p className="text-white text-xl ">
+                  Belajar berbagai bahasa Nusantara serta berbagai jenis budaya
+                  menakjubkan dari seluruh penjuru Indonesia!
+                </p>
+              )}
             </div>
-            <div className="flex gap-4 pb-5">
-              <button className="px-6 py-2 bg-yellow-400 rounded-full font-medium">
-                Lanjutin
-              </button>
-              <button className="px-6 py-2 bg-indigo-500 bg-opacity-50 rounded-full text-white border border-white border-opacity-30">
-                Ganti Budaya
-              </button>
-            </div>
+            {user ? (
+              <div className="flex gap-4 pb-5">
+                <button className="px-6 py-2 bg-yellow-400 rounded-full font-medium">
+                  Lanjutin
+                </button>
+                <button className="px-6 py-2 bg-indigo-500 bg-opacity-50 rounded-full text-white border border-white border-opacity-30">
+                  Ganti Budaya
+                </button>
+              </div>
+            ) : (
+              <div className="flex gap-4 pb-5">
+                <button className="px-6 py-2 bg-yellow-400 rounded-full font-medium">
+                  <Link href={"/sign-up"}>Mulai Sekarang</Link>
+                </button>
+                <button className="px-6 py-2 bg-indigo-500 bg-opacity-50 rounded-full text-white border border-white border-opacity-30">
+                  <Link href={"/pricing"}>Fitur premium</Link>
+                </button>
+              </div>
+            )}
           </div>
           <div className="md:w-1/2 flex relative justify-end mt-8 md:mt-0">
             <Image
