@@ -1,7 +1,0 @@
-import { supabase } from "./supa-client";
-
-const { data, error } = await supabase.storage.createBucket("avatars", {
-  public: true,
-  allowedMimeTypes: ["image/*"],
-  fileSizeLimit: "1MB",
-});
