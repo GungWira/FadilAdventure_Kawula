@@ -43,7 +43,7 @@ export default function CarouselSize() {
               className="md:basis-2/4 lg:basis-56"
             >
               <div>
-                <Link href={`/teste/${chapter.id}`}>
+                <Link href={`/lesson/${chapter.id}`}>
                   <Image
                     src={chapter.imageUrl || "/lesson-bg.png"} // fallback kalau tidak ada gambar
                     alt={chapter.title || "Chapter"}
@@ -53,7 +53,7 @@ export default function CarouselSize() {
                   />
                   <div className="mt-4">
                     <h3 className="font-medium mb-1">{chapter.title}</h3>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 line-clamp-2">
                       {chapter.description}
                     </p>
                   </div>

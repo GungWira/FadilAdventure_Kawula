@@ -2,22 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "../supa-client";
 import { createErrorResponse, handleServerError } from "../error/error-handle";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-): Promise<NextResponse> {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const lessonId = (await params).id;
+    const body = await request.json();
+    const lessonId = body.id;
 
     if (!lessonId) {
       return createErrorResponse("Lesson ID is required", 400);
     }
 
     const { data: lesson, error: lessonError } = await supabase
-      .from("lessons")
-      .select("translate, question, audio")
-      .eq("id", lessonId)
-      .single();
+      .from("lesson")
+      .select("*")
+      .eq("episode_id", lessonId);
 
     if (lessonError) {
       return createErrorResponse(lessonError.message, 500);
@@ -29,9 +26,9 @@ export async function GET(
   }
 }
 
-export async function PUT( 
+export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
     const lessonId = (await params).id;

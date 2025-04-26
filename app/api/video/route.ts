@@ -9,6 +9,21 @@ interface VideoData {
   type: string[];
 }
 
+export async function GET() {
+  try {
+    const { data: streamData, error: streamError } = await supabase
+      .from("video")
+      .select("*");
+    if (streamError || !streamData) {
+      return createErrorResponse("Culture not found", 404);
+    }
+
+    return NextResponse.json(streamData, { status: 200 });
+  } catch (error) {
+    return handleServerError(error);
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
@@ -16,9 +31,11 @@ export async function POST(request: NextRequest) {
     const description = formData.get("description") as string;
     const title = formData.get("title") as string;
     const typeString = formData.get("type") as string;
+    const user_id = formData.get("user_id") as string;
+    const username = formData.get("username") as string;
     const type = typeString ? JSON.parse(typeString) : [];
 
-    if (!file || !description || !title || !type) {
+    if (!file || !description || !title || !type || !user_id || !username) {
       return createErrorResponse("Missing required fields", 400);
     }
 
@@ -50,6 +67,8 @@ export async function POST(request: NextRequest) {
           description,
           title,
           type,
+          creator_id: user_id,
+          creator_username: username,
         },
       ])
       .select();

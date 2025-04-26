@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Button } from "../ui/button";
-import CarouselLearn from "./carousel-learn";
+import CarouselStream from "./carousel-stream";
 import { useState, useEffect } from "react";
 
 export default function StreamCarousel() {
@@ -41,7 +41,7 @@ export default function StreamCarousel() {
         </div>
       </div>
 
-      <CarouselLearn />
+      <CarouselStream />
     </section>
   );
 }
