@@ -60,7 +60,7 @@ export default function AuthButton() {
         </Avatar>
       </div>
       {showPopup && (
-        <div className="absolute right-0 z-30 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+        <div className="absolute right-0 z-30 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg ">
           <ul className="py-2">
             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
               Jadi premium
