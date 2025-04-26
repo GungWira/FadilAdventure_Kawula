@@ -3,8 +3,6 @@ import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Link from "next/link";
-import { SmtpMessage } from "../smtp-message";
 import Image from "next/image";
 
 export default async function Signup(props: {
@@ -21,11 +19,11 @@ export default async function Signup(props: {
 
   return (
     <>
-      <div className="w-screen h-screen fixed top-0 left-0 bg-[#7E80D8] flex justify-center items-center">
-        <form className=" relative z-10 flex flex-col mx-auto bg-white w-full max-w-96 px-8 py-8 rounded-xl">
+      <div className="w-screen h-screen fixed top-0 left-0 bg-[#5956EB] flex justify-center items-center">
+        <form className=" relative z-10 flex flex-col mx-auto bg-white w-full max-w-108 px-8 py-8 rounded-xl">
           <div className="flex flex-col justify-center items-center gap-1">
             <Image
-              src={"/logo-w-bg.svg"}
+              src={"/logo-w-bg.webp"}
               alt="Logo"
               width={40}
               height={40}
@@ -36,7 +34,7 @@ export default async function Signup(props: {
             </p>
             <h1 className="text-2xl font-medium my-1">Buat Akun</h1>
             <div className="flex justify-center items-center gap-2">
-              <div className="w-3 aspect-square rounded-full bg-[#7E80D8]"></div>
+              <div className="w-3 aspect-square rounded-full bg-[#5956EB]"></div>
               <p className="text-sm text text-foreground">11.301 Anggota</p>
             </div>
           </div>
@@ -51,7 +49,10 @@ export default async function Signup(props: {
               minLength={6}
               required
             />
-            <SubmitButton formAction={signUpAction} pendingText="Signing up...">
+            <SubmitButton
+              formAction={signUpAction}
+              pendingText="Lagi Proses..."
+            >
               Buat Akun
             </SubmitButton>
             <FormMessage message={searchParams} />
