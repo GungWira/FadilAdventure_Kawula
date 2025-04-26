@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import Image from "next/image";
 import { ChevronLeft } from "lucide-react";
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 
 interface Question {
   id: string;
@@ -73,7 +73,10 @@ export default function QuizPage() {
   const progress = (current / questions.length) * 100;
 
   const navigateOrGo = () => {
-    setCurrent((prev) => Math.max(prev - 1, 0));
+    setCurrent((prev) => Math.min(prev + 1, questions.length - 1));
+    if (current == questions.length - 1) {
+      redirect("/quiz/" + id);
+    }
   };
 
   return (
@@ -160,17 +163,17 @@ export default function QuizPage() {
 
       <footer className="w-full flex items-center mx-auto mt-16 text-center text-xs py-16">
         <div className="flex w-full justify-between items-center gap-4">
-          <Button variant={"secondary"} size={"lg"} onClick={navigateOrGo}>
+          <Button
+            variant={"secondary"}
+            size={"lg"}
+            onClick={() => {
+              setCurrent((prev) => Math.max(prev - 1, 0));
+            }}
+          >
             Sebelumnya
           </Button>
 
-          <Button
-            variant={"blue"}
-            size={"lg"}
-            onClick={() =>
-              setCurrent((prev) => Math.min(prev + 1, questions.length - 1))
-            }
-          >
+          <Button variant={"blue"} size={"lg"} onClick={navigateOrGo}>
             Selanjutnya
           </Button>
         </div>
