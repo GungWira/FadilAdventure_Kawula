@@ -58,22 +58,36 @@ export async function PUT(
 ): Promise<NextResponse> {
   try {
     const episodeId = (await params).id;
+    const { user_id } = await request.json();
 
     if (!episodeId) {
       return createErrorResponse("Episode ID is required", 400);
     }
 
-    const { data, error } = await supabase
-      .from("episodes")
-      .update({ is_completed: true })
-      .eq("id", episodeId)
-      .select();
-
-    if (error) {
-      return createErrorResponse(error.message, 500);
+    if (!user_id) {
+      return createErrorResponse("User ID is required", 400);
     }
 
-    return NextResponse.json(data);
+    const { error: episodeError } = await supabase
+      .from("episodes")
+      .update({ is_completed: true })
+      .eq("id", episodeId);
+
+    if (episodeError) {
+      return createErrorResponse(episodeError.message, 500);
+    }
+
+    const { data: userData, error: userError } = await supabase
+      .from("profiles")
+      .update({ xp: supabase.rpc('increment', { value: 20 }) })
+      .eq("id", user_id)
+      .select();
+
+    if (userError) {
+      return createErrorResponse(userError.message, 500);
+    }
+
+    return NextResponse.json(userData);
   } catch (error) {
     return handleServerError(error);
   }
