@@ -3,6 +3,7 @@ import { Geist, Poppins } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 
 import "./globals.css";
+import { AuthProvider } from "@/context/AuthContext";
 import Navbar from "@/components/layouts/navbar";
 import Footer from "@/components/layouts/footer";
 const defaultUrl = process.env.VERCEL_URL
@@ -36,10 +37,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar/>
-          <div className="container mx-auto py-4">{children}</div>
-          <Footer/>
-          </ThemeProvider>
+          <AuthProvider>
+            <Navbar />
+            <div className="container mx-auto py-4">{children}</div>
+            <Footer />
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
