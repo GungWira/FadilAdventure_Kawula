@@ -4,6 +4,18 @@ Kaluwa adalah platform pembelajaran interaktif berbasis kuis dan video kreator y
 
 ---
 
+## Anggota Kelompok
+
+### Team : Fadil Adventure
+
+- Anak Agung Gede Putu Wiradarma
+- Anak Agung Gede Bagus Abi Wiguna
+- Ida Bagus Dharma Abimantra
+- I Made Sutha Raditya
+- Alexandro Benarivo Purwanto
+
+---
+
 ## 🔥 Teknologi yang Digunakan
 
 - Next.js — Framework React untuk web app modern
