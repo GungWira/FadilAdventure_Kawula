@@ -30,7 +30,7 @@ export async function GET(
 
     const { data: questions, error: questionsError } = await supabase
       .from("questions")
-      .select("id, question, answer, answer_options")
+      .select("id, question, answer, answer_options, type")
       .in("id", episode_questions.questions_id || []);
 
     console.log(questions)
@@ -39,7 +39,8 @@ export async function GET(
       id: q.id,
       question: q.question,
       answer: q.answer,
-      options: q.answer_options
+      options: q.answer_options,
+      types : q.type
     })) || [];
 
     if (questionsError) {
