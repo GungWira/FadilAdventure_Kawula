@@ -1,9 +1,8 @@
-
 import { Geist, Poppins } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 
 import "./globals.css";
-import Navbar from "@/components/layouts/navbar"
+import Navbar from "@/components/layouts/navbar";
 import Footer from "@/components/layouts/footer";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -12,8 +11,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Kawula | Belajar bahasa budaya Indonesia",
+  description: "Aplikasi pembelajaran bahasa budaya Indonesia",
 };
 
 const geistSans = Geist({
@@ -31,14 +30,12 @@ export default function RootLayout({
       <body className="bg-background text-foreground">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar/>
-          <div className="container mx-auto py-4">
-            {children}
-          </div>
+          <Navbar />
+          <div className="container mx-auto py-4">{children}</div>
           <Footer />
         </ThemeProvider>
       </body>
