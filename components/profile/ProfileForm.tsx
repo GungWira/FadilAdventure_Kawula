@@ -1,9 +1,10 @@
-'use client'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import React from 'react'
-import z from 'zod'
-import { Button } from "@/components/ui/button"
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import z from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,15 +13,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 const formSchema = z.object({
+  profile_picture: z.any(),
   nama_lengkap: z.string(),
   nama_panggilan: z.string(),
   email: z.string(),
-  umur: z.string()
-})
+  umur: z.string(),
+});
 
 export default function ProfileForm() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -29,94 +32,142 @@ export default function ProfileForm() {
       nama_lengkap: "",
       nama_panggilan: "",
       email: "",
-      umur: ""
+      umur: "",
     },
-  })
+  });
+
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+    console.log(values);
   }
+
   return (
     <div>
-      <div className="container mx-auto py-4 border-red-500">
-        <h1 className='text-center scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-3xl mb-6'>Selesaikan profilmu</h1>
-        <div className=" flex justify-center items-center border border-red-500">
-        <Form {...form}>
-          
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 w-1/2">
-            <FormField
-              control={form.control}
-              name="nama_lengkap"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nama Lengkap</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Masukkan nama" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    {/* This is your public display name. */}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+      <div className="container mx-auto py-4">
+        <div className="flex flex-col justify-center items-center w-full gap-2 mb-6">
+          <h1 className="text-center scroll-m-20 text-4xl font-semibold tracking-tight lg:text-3xl">
+            Selesaikan profilmu
+          </h1>
+          <p>Yuk lengkapin profil kamu biar kita saling kenal!</p>
+        </div>
 
-            <FormField
-              control={form.control}
-              name="nama_panggilan"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nama Panggilan</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Masukkan nama panggilan" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    {/* This is your public display name. */}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <div className="flex justify-center items-center w-full">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-4 w-1/2"
+            >
+              {/* PROFILE */}
+              <FormField
+                control={form.control}
+                name="profile_picture"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col justify-center items-center">
+                    <FormLabel>Foto Profil</FormLabel>
+                    <div className="w-full relative flex justify-center items-center overflow-hidden aspect-square rounded-full max-w-32">
+                      <FormControl className="opacity-0 absolute z-10 w-full h-full">
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onloadend = () => {
+                                setPreviewImage(reader.result as string);
+                              };
+                              reader.readAsDataURL(file);
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Masukkan email" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    {/* This is your public display name. */}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                              field.onChange(e);
+                            }
+                          }}
+                        />
+                      </FormControl>
+                      <div className="relative w-full aspect-square">
+                        <Image
+                          src={previewImage || "/photo-profile.webp"}
+                          alt="Preview"
+                          width={80}
+                          height={80}
+                          className="w-full h-auto rounded-full object-cover"
+                        />
+                      </div>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form.control}
-              name="umur"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Umur</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Masukkan umur" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    {/* This is your public display name. */}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex items-end justify-end">
-            <Button type="submit">Next</Button>
-            </div>
-          </form>
-        </Form>
+              {/* Nama Lengkap */}
+              <FormField
+                control={form.control}
+                name="nama_lengkap"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nama Lengkap</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Masukkan nama" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Nama Panggilan */}
+              <FormField
+                control={form.control}
+                name="nama_panggilan"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nama Panggilan</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Masukkan nama panggilan" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Email */}
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Masukkan email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Umur */}
+              <FormField
+                control={form.control}
+                name="umur"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Umur</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Masukkan umur" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="flex items-end justify-end">
+                <Button type="submit" variant={"blue"}>
+                  Next
+                </Button>
+              </div>
+            </form>
+          </Form>
         </div>
       </div>
     </div>
-  )
+  );
 }

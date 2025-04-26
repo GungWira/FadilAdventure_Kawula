@@ -5,21 +5,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "./ui/button";
 import { useAuth } from "@/context/AuthContext";
 
-type UserProfile = {
-  id: string;
-  username: string;
-  profile_image: string;
-  xp: number;
-};
-
 export default function AuthButton() {
   const { user } = useAuth();
-  console.log(user);
-  // const supabase = await createClient();
-
-  // const {
-  //   data: { user },
-  // } = await supabase.auth.getUser();
 
   if (user == null) {
     return (
