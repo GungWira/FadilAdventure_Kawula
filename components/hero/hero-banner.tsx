@@ -25,7 +25,7 @@ export default function HeroBanner() {
         </div>
 
         <div className="relative z-10 flex flex-col md:flex-row justify-between gap-16">
-          <div className="md:w-1/2 flex flex-col gap-16">
+          <div className="md:w-1/2 flex flex-col gap-8">
             <div className="">
               <h1 className="text-4xl font-bold text-white mb-4 pt-5">
                 Halo, {user ? user.username : ""}
@@ -36,7 +36,7 @@ export default function HeroBanner() {
                 lanjutin progress belajar kamu sekarang!
               </p>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-4 pb-5">
               <button className="px-6 py-2 bg-yellow-400 rounded-full font-medium">
                 Lanjutin
               </button>

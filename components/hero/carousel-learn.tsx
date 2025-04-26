@@ -1,16 +1,18 @@
+
 "use client" // WAJIB: supaya bisa pakai useState, useEffect
 
-import * as React from "react"
 import { useEffect, useState } from "react"
-import Image from "next/image"
-import Link from "next/link"
+import * as React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
+} from "@/components/ui/carousel";
 
 export default function CarouselSize() {
   const [chapters, setChapters] = useState<any[]>([])
