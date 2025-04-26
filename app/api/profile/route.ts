@@ -21,7 +21,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     return handleServerError(error);
   }
-};
+}
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     if (!fullname || !umur || !username) {
       return createErrorResponse("Name and email are required", 400);
     }
-
+    
     let image_url = null;
     if (imageFile) {
       const bytes = await imageFile.arrayBuffer();
@@ -61,7 +61,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
       image_url = publicUrl;
     }
-
     const { data, error }: CreateProfileResponse = await supabase
       .from("profiles")
       .insert([{ 
@@ -79,4 +78,4 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     return handleServerError(error);
   }
-};
+}
