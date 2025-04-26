@@ -5,28 +5,29 @@ import {
   handleServerError,
 } from "../error/error-handle";
 
-export async function GET(request: NextRequest): Promise<NextResponse> {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const { data: chapters, error: chapterError } = await supabase
-      .from("chapter")
-      .select("episode");
+    const { episodeId } = await request.json();
 
-    if (chapterError) {
-      return createErrorResponse(chapterError.message, 500);
+    if (!episodeId) {
+      return createErrorResponse("Episode ID is required", 400);
     }
 
-    const episodeIds = chapters?.flatMap(chapter => chapter.episode) || [];
-
-    const { data: episodes, error: episodeError } = await supabase
+    const { data: episode, error } = await supabase
       .from("episode")
       .select("*")
-      .in("id", episodeIds);
+      .eq("id", episodeId)
+      .single();
 
-    if (episodeError) {
-      return createErrorResponse(episodeError.message, 500);
+    if (error) {
+      return createErrorResponse(error.message, 500);
     }
 
-    return NextResponse.json(episodes);
+    if (!episode) {
+      return createErrorResponse("Episode not found", 404);
+    }
+
+    return NextResponse.json(episode);
   } catch (error) {
     return handleServerError(error);
   }
