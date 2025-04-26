@@ -38,19 +38,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
-    const { fullname, username, email, user_id, culture_name }: Profile = await request.json();
+    const { fullname, username, email, user_id }: Profile = await request.json();
 
     if (!fullname || !email || !username) {
       return createErrorResponse("Name and email are required", 400);
     }
-
-    const {data : culture} = await supabase.from("culture").select("id").eq("culture_name", culture_name);
-    
-    
     
     const { data, error }: CreateProfileResponse = await supabase
       .from("profiles")
-      .insert([{ fullname, username, email, user_id, culture }])
+      .insert([{ fullname, username, email, user_id }])
       .select("*")
       .single();
 
@@ -64,9 +60,20 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
 export async function PATCH(request: NextRequest): Promise<NextResponse> {
   try {
-    const { user_id, ...fields } = await request.json();
+    const { user_id, fields } = await request.json();
     if (!user_id) return createErrorResponse("ID is required", 400);
 
+    if (fields.culture_name) {
+    const { data: culture } = await supabase
+      .from("culture")
+      .select("id")
+      .eq("culture_name", fields.culture_name);
+
+    if (culture?.[0]) {
+      fields.culture_id = culture[0].id;
+    }
+  }
+      
     const { data, error } = await supabase
       .from("profiles")
       .update(fields)
@@ -74,6 +81,7 @@ export async function PATCH(request: NextRequest): Promise<NextResponse> {
       .select("*");
 
     if (error) return createErrorResponse(error.message, 500);
+    
     if (!data) return createErrorResponse("Profile not found", 404);
 
     return NextResponse.json(data);

@@ -7,7 +7,6 @@ export interface Profile {
   fullname: string;
   user_id: UUID;
   created_at?: string;
-  culture_name : string;
 }
 
 export interface CreateProfileResponse {
