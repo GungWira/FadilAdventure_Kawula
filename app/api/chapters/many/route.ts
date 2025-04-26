@@ -11,11 +11,14 @@ export async function GET(): Promise<NextResponse> {
     if (error) {
       return createErrorResponse(error.details, 400);
     }
+
+
     if (!chaptersData) {
       return createErrorResponse("Chapters not found", 404);
     }
 
-    const episodesIds = chaptersData.flatMap(chapter => chapter.episodes_id);
+    const episodesIds = chaptersData.flatMap(chapter => chapter.episode);
+
     const { data: episodes, error: episodesError } = await supabase
       .from("episodes")
       .select("*")
@@ -27,9 +30,7 @@ export async function GET(): Promise<NextResponse> {
 
     const resultData = chaptersData.map(chapter => ({
       ...chapter,
-      episodes: episodes?.filter(episode => 
-        chapter.episodes_id.includes(episode.id)
-      )
+      episodes: episodes
     }));
     
     return NextResponse.json(resultData, { status: 200 });
